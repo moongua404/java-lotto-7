@@ -1,7 +1,6 @@
 package lotto.utils;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public enum LottoPrize {
     NOTHING("꽝", 0),
@@ -27,14 +26,11 @@ public enum LottoPrize {
         return price;
     }
 
-    public static LottoPrize getLottoPrize(List<Integer> winningNumber, List<Integer> lottoNumber, int bonusNumber) {
-        Stream<Integer> totalNumber = Stream.concat(lottoNumber.stream(), Stream.of(bonusNumber));
-        int matchCount = (int) totalNumber.filter((winningNumber::contains)).count();
-        boolean matchBonus = winningNumber.contains(bonusNumber);
-        return getLottoPrize(matchCount, matchBonus);
+    public static List<LottoPrize> getPrizeTypes() {
+        return List.of(FIFTH_PRICE, FOURTH_PRICE, THIRD_PRICE, SECOND_PRICE, FIRST_PRICE);
     }
 
-    private static LottoPrize getLottoPrize(int matchCount, boolean matchBonus) {
+    public static LottoPrize getLottoPrize(int matchCount, boolean matchBonus) {
         if (matchCount == 6) {
             return getFirstOrSecondPrize(matchBonus);
         }

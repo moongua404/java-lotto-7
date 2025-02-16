@@ -16,7 +16,7 @@ public class InputView {
             System.out.println(MessageConstants.PURCHASE_GUIDE_MESSAGE.getMessage());
             return Integer.parseInt(inputProvider.readLine());
         } catch (Exception e) {
-            throw ExceptionConstants.INVALID_PRICE.getException();
+            throw new IllegalArgumentException(ExceptionConstants.INVALID_PRICE.getMessage());
         }
     }
 
@@ -25,7 +25,7 @@ public class InputView {
             System.out.println(MessageConstants.LOTTO_NUMBER_GUIDE_MESSAGE.getMessage());
             return inputProvider.readLine();
         } catch (Exception e) {
-            throw ExceptionConstants.INVALID_LOTTO_NUMBER_FORM.getException();
+            throw new IllegalArgumentException(ExceptionConstants.INVALID_LOTTO_NUMBER_FORM.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class InputView {
             System.out.println(MessageConstants.BONUS_NUMBER_GUIDE_MESSAGE.getMessage());
             return Integer.parseInt(inputProvider.readLine());
         } catch (Exception e) {
-            throw ExceptionConstants.INVALID_BONUS_NUMBER_FORM.getException();
+            throw new IllegalArgumentException(ExceptionConstants.INVALID_BONUS_NUMBER_FORM.getMessage());
         }
     }
 }
