@@ -1,4 +1,6 @@
 package lotto.model.dto;
 
-public class WinningDataDto {
+import lotto.utils.LottoPrize;
+
+public record WinningDataDto(LottoPrize lottoPrize, int count) {
 }

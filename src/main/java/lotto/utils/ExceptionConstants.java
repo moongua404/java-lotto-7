@@ -12,7 +12,6 @@ public enum ExceptionConstants {
     INVALID_BONUS_NUMBER_FORM(IllegalArgumentException.class, "보너스 번호 하나를 정확히 입력해주세요. ex)7");
 
 
-
     private final Class<? extends Exception> exception;
     private final String message;
 
@@ -21,7 +20,8 @@ public enum ExceptionConstants {
         this.message = "[ERROR] " + message;
     }
 
-    public void getException() throws Exception {
-        throw this.exception.getConstructor(String.class).newInstance(message);
+    public Exception getException()
+            throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        return this.exception.getConstructor(String.class).newInstance(message);
     }
 }

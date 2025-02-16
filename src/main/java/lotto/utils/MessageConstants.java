@@ -7,9 +7,10 @@ public enum MessageConstants {
     BONUS_NUMBER_GUIDE_MESSAGE("보너스 번호를 입력해 주세요."),
     WINNING_RESULTS_MESSAGE("당첨 통계\n---"),
     WINNING_NUMBER_MESSAGE("%s (%,d원) - %d개"),
-    RATE_OF_RETURN_MESSAGE("총 수익률은 %.2f%입니다.");
+    RATE_OF_RETURN_MESSAGE("총 수익률은 %.1f%%입니다.");
 
     private final String message;
+
     MessageConstants(String message) {
         this.message = message;
     }
