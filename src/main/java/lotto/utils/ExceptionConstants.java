@@ -7,7 +7,8 @@ public enum ExceptionConstants {
     INVALID_LOTTO_RANGE("1부터 45 사이의 값을 입력해 주세요."),
     DUPLICATED_LOTTO_NUMBER("중복되지 않은 번호를 입력해주세요."),
     INVALID_LOTTO_NUMBER_FORM("당첨 번호 6개를 정확히 입력해주세요. ex)1,2,3,4,5,6"),
-    INVALID_BONUS_NUMBER_FORM("보너스 번호 하나를 정확히 입력해주세요. ex)7");
+    INVALID_BONUS_NUMBER_FORM("보너스 번호 하나를 정확히 입력해주세요. ex)7"),
+    INTERNAL_SERVER_ERROR("알 수 없는 이유로 프로그램이 정삭 작동하지 않습니다.");
 
 
     private final String message;

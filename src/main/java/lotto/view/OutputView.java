@@ -13,6 +13,10 @@ public class OutputView {
         System.out.printf(WRAPPER + "%n", String.join(SEPARATOR, numbers));
     }
 
+    public void printResultGuide(int amount) {
+        System.out.printf(MessageConstants.PURCHASE_AMOUNT_MESSAGE.getMessage() + "%n", amount);
+    }
+
     public void printResult(List<WinningDataDto> result) {
         System.out.println(MessageConstants.WINNING_RESULTS_MESSAGE.getMessage());
         result.forEach((data) ->
@@ -23,5 +27,9 @@ public class OutputView {
 
     public void printRateOfReturn(float rateOfReturn) {
         System.out.printf(MessageConstants.RATE_OF_RETURN_MESSAGE.getMessage() + "%n", rateOfReturn);
+    }
+
+    public void printException(Exception exception) {
+        System.out.println(exception.getMessage());
     }
 }

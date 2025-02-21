@@ -1,12 +1,21 @@
 package lotto.service;
 
 import java.util.List;
+import java.util.function.Supplier;
 import lotto.model.dto.WinningDataDto;
 
 public interface LottoControlService {
-    void buyLotto(int amount);
+    void buyLotto(int amount, Supplier<List<Integer>> pickFunction);
 
-    List<WinningDataDto> checkWinning(List<Integer> winningNumbers, int bonusNumber);
+    public void setWinningNumbers(String line);
 
-    float calculateROI(List<WinningDataDto> winningDataDto);
+    public void setBonusNumber(int bonusNumber);
+
+    public void composeLotto();
+
+    List<WinningDataDto> checkWinning();
+
+    float calculateROI(List<WinningDataDto> winningDataDto, int price);
+
+    List<List<Integer>> getLotto();
 }

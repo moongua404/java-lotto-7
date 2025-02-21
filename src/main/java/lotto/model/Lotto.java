@@ -2,6 +2,8 @@ package lotto.model;
 
 import static lotto.utils.ExceptionConstants.DUPLICATED_LOTTO_NUMBER;
 import static lotto.utils.ExceptionConstants.INVALID_LOTTO_RANGE;
+import static lotto.utils.LottoConstants.LOWER_BOUND_NUMBER;
+import static lotto.utils.LottoConstants.UPPER_BOUND_NUMBER;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -23,16 +25,29 @@ public class Lotto {
         if (Utility.hasDuplicatedValue(numbers)) {
             throw new IllegalArgumentException(DUPLICATED_LOTTO_NUMBER.getMessage());
         }
-        if (Utility.isInRange(numbers, 0, 45)) {
+        if (!Utility.isInRange(numbers, LOWER_BOUND_NUMBER, UPPER_BOUND_NUMBER)) {
             throw new IllegalArgumentException(INVALID_LOTTO_RANGE.getMessage());
         }
     }
 
-    // TODO: 추가 기능 구현
     public LottoPrize checkWinning(List<Integer> winningNumbers, int bonusNumber) {
         List<Integer> totalWinningNumber = Stream.concat(winningNumbers.stream(), Stream.of(bonusNumber)).toList();
         int matchCount = (int) numbers.stream().filter(totalWinningNumber::contains).count();
         boolean matchBonus = numbers.contains(bonusNumber);
         return LottoPrize.getLottoPrize(matchCount, matchBonus);
+    }
+
+    public void validateAdditionalNumber(int value) {
+        List<Integer> tempNumbers = Stream.concat(numbers.stream(), Stream.of(value)).toList();
+        if (Utility.hasDuplicatedValue(tempNumbers)) {
+            throw new IllegalArgumentException(DUPLICATED_LOTTO_NUMBER.getMessage());
+        }
+        if (!Utility.isInRange(value, LOWER_BOUND_NUMBER, UPPER_BOUND_NUMBER)) {
+            throw new IllegalArgumentException(INVALID_LOTTO_RANGE.getMessage());
+        }
+    }
+
+    public List<Integer> getNumbers() {
+        return numbers;
     }
 }

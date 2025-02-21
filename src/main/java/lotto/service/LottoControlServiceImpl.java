@@ -1,42 +1,55 @@
 package lotto.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import lotto.model.Lotto;
+import lotto.model.LottoRepository;
+import lotto.model.LottoRepository.LottoRepositoryBuilder;
 import lotto.model.dto.WinningDataDto;
-import lotto.utils.LottoPrize;
-import lotto.utils.Utility;
 
-public class LottoControlServiceImpl {
-    List<Lotto> lottoRepository;
+public class LottoControlServiceImpl implements LottoControlService {
+    LottoRepositoryBuilder lottoRepositoryBuilder;
+    LottoRepository lottoRepository;
 
-    LottoControlServiceImpl() {
-        this.lottoRepository = new ArrayList<>();
+    public LottoControlServiceImpl() {
+        lottoRepositoryBuilder = new LottoRepositoryBuilder();
     }
 
     public void buyLotto(int amount, Supplier<List<Integer>> pickFunction) {
-        lottoRepository.addAll(
+        lottoRepositoryBuilder.setPurchasedLotto(
                 IntStream.range(0, amount)
                         .mapToObj(i -> new Lotto(pickFunction.get()))
                         .toList()
         );
     }
 
-    public List<WinningDataDto> checkWinning(List<Integer> winningNumbers, int bonusNumber) {
-        List<LottoPrize> prizes = lottoRepository.stream()
-                .map(lotto -> lotto.checkWinning(winningNumbers, bonusNumber))
-                .toList();
-        return LottoPrize.getPrizeTypes().stream()
-                .map(lottoPrize -> new WinningDataDto(lottoPrize, (int) Utility.countValue(prizes, lottoPrize)))
-                .toList();
+    public void setWinningNumbers(String line) {
+        lottoRepositoryBuilder.setWinningNumber(line);
+    }
+
+    public void setBonusNumber(int bonusNumber) {
+        lottoRepositoryBuilder.setBonusNumber(bonusNumber);
+    }
+
+    public void composeLotto() {
+        this.lottoRepository = lottoRepositoryBuilder.build();
+    }
+
+    public List<WinningDataDto> checkWinning() {
+        return lottoRepository.countGrade();
     }
 
     public float calculateROI(List<WinningDataDto> winningDataDto, int price) {
         long returnValue = winningDataDto.stream()
-                .mapToInt(dto -> dto.lottoPrize().getPrice() * dto.count())
+                .mapToLong(dto -> (long) dto.lottoPrize().getPrice() * dto.count())
                 .sum();
-        return (float) (returnValue / price);
+        return ((float) returnValue / price) * 100;
+    }
+
+    public List<List<Integer>> getLotto() {
+        return lottoRepositoryBuilder.getPurchasedLotto().stream()
+                .map(Lotto::getNumbers)
+                .toList();
     }
 }
